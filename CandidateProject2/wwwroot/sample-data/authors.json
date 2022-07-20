@@ -1,0 +1,56 @@
+﻿[
+  {
+    "firstName": "Johnson",
+    "lastName": "White",
+    "address": "10932 Bigge Rd.",
+    "city": "Menlo Park",
+    "state": "CA",
+    "zip": 94025,
+    "phone": "408 496-7223"
+  },
+  {
+    "firstName": "Majorie",
+    "lastName": "Green",
+    "address": "309 63rd St. #411",
+    "city": "Oakland",
+    "state": "CA",
+    "zip": 94618,
+    "phone": "415 986-7020"
+  },
+  {
+    "firstName": "Michel",
+    "lastName": "DeFrance",
+    "address": "3 Balding Pl.",
+    "city": "Gary",
+    "state": "IN",
+    "zip": 46403,
+    "phone": "219 547-9982"
+  },
+  {
+    "firstName": "Stearns",
+    "lastName": "MacFeather",
+    "address": "44 Upland Hts.",
+    "city": "Oakland",
+    "state": "CA",
+    "zip": 94612,
+    "phone": "415 354-7128"
+  },
+  {
+    "firstName": "Anne",
+    "lastName": "Ringer",
+    "address": "67 Seventh Av.",
+    "city": "Salt Lake City",
+    "state": "UT",
+    "zip": 84152,
+    "phone": "801 826-0752"
+  },
+  {
+    "firstName": "Albert",
+    "lastName": "Ringer",
+    "address": "67 Seventh Av.",
+    "city": "Salt Lake City",
+    "state": "UT",
+    "zip": 84152,
+    "phone": "801 826-0752"
+  }
+]

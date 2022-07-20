@@ -1,0 +1,87 @@
+﻿@page "/fetchdata"
+@inject HttpClient Http
+
+<PageTitle>Challenge Project</PageTitle>
+
+<h1>Blazor with Syncfusion</h1>
+
+<p>For WCS application 7/20/2022</p>
+
+@if (Authors == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <SfGrid TValue="Author" AllowPaging="true" AllowSorting="true" AllowFiltering="true" Toolbar=@Tools>
+        <SfDataManager AdaptorInstance=@typeof(MyAdapter) Adaptor="Adaptors.CustomAdaptor" />
+        <GridPageSettings PageSize="4" />
+        <GridColumns>
+            <GridColumn Field=@nameof(Author.FirstName) HeaderText="First Name" Width="80" />
+            <GridColumn Field=@nameof(Author.LastName) HeaderText="Last Name" Width="80" />
+            <GridColumn Field=@nameof(Author.Address) HeaderText="Address" Width="120" />
+            <GridColumn Field=@nameof(Author.City) HeaderText="City" Width="80" />
+            <GridColumn Field=@nameof(Author.State) HeaderText="State" Width="50" />
+            <GridColumn Field=@nameof(Author.Zip) HeaderText="Zip" Width="50" />
+            <GridColumn Field=@nameof(Author.Phone) HeaderText="Phone" Width="89" />
+        </GridColumns>
+    </SfGrid>
+}
+
+@code {
+
+    public static Author[]? Authors { get; set; }
+
+    public List<string> Tools = new List<string>() { "Search" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        Authors = await Http.GetFromJsonAsync<Author[]>("sample-data/authors.json");
+    }
+
+    public class Author
+    {
+        public string? FirstName { get; set; }
+
+        public string? LastName { get; set; }
+
+        public string? Address { get; set; }
+
+        public string? City { get; set; }
+        public string? State { get; set; }
+
+        public int Zip { get; set; }
+
+        public string? Phone { get; set; }
+    }
+
+    public class MyAdapter : DataAdaptor
+    {
+        public override object Read(DataManagerRequest dmr, string? key = null)
+        {
+            IEnumerable<Author> DataSource = Authors ?? Enumerable.Empty<Author>();
+            if (dmr.Search != null && dmr.Search.Count > 0)
+            {
+                DataSource = DataOperations.PerformSearching(DataSource, dmr.Search);
+            }
+            if (dmr.Sorted != null && dmr.Sorted.Count > 0)
+            {
+                DataSource = DataOperations.PerformSorting(DataSource, dmr.Sorted);
+            }
+            if (dmr.Where != null && dmr.Where.Count > 0)
+            {
+                DataSource = DataOperations.PerformFiltering(DataSource, dmr.Where, dmr.Where[0].Operator);
+            }
+            int count = DataSource.Cast<Author>().Count();
+            if (dmr.Skip != 0)
+            {
+                DataSource = DataOperations.PerformSkip(DataSource, dmr.Skip);
+            }
+            if (dmr.Take != 0)
+            {
+                DataSource = DataOperations.PerformTake(DataSource, dmr.Take);
+            }
+            return dmr.RequiresCounts ? new DataResult() { Result = DataSource, Count = count } : (object)DataSource;
+        }
+    }
+}
